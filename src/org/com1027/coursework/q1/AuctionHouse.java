@@ -8,7 +8,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * The class is describing the properties and actions of an auction house.
+ * The class is describing the properties and actions of an auction house, based on ebay.
+ * It is part of the coursework for the first semester of Programming Fundamentals (COM1027).
  * @author Milen Georgiev
  *
  */
@@ -27,6 +28,8 @@ public class AuctionHouse {
    * Initialises the Maps.
    */
   public AuctionHouse() {
+    super();
+    
     this.forSaleProducts = new HashMap<Product, User>();
     this.soldProducts = new HashMap<Product, User>();
     this.unsoldProducts = new HashMap<Product, User>();
@@ -35,23 +38,30 @@ public class AuctionHouse {
   /**
    * Checks whether a product is currently at auction or has been before.
    * @param product -> the product, whose existence we are checking
+   * 
    * @return does the product exist
+   * 
+   * @throws IllegalArgumentExcetion -> If product is null.
    */
-  public boolean checkExistence(Product product) {
-    boolean productExists = false;
-    
+  public boolean checkExistence(Product product) throws IllegalArgumentException {
     if(product == null) {
       throw new IllegalArgumentException("Product must not be null!");
     }
     
+    boolean productExists = false;
+    
+    // Searches the product in the map for products, which are for sale.
     for (Map.Entry<Product, User> entry: this.forSaleProducts.entrySet()) {
       if(entry.getKey() == product) {
         productExists = true;
         break;
       }
     }
+    
     // The next if statements are placed to optimise the code and
     // leave the function with only one return statement.
+    
+    // Searches the product in the map for products, which are sold.
     if(productExists == false) {
       for (Map.Entry<Product, User> entry: this.soldProducts.entrySet()) {
         if(entry.getKey() == product) {
@@ -61,6 +71,7 @@ public class AuctionHouse {
       }
     }
     
+    // Searches the product in the map for products, which are not sold.
     if(productExists == false) {
       for (Map.Entry<Product, User> entry: this.unsoldProducts.entrySet()) {
         if(entry.getKey() == product) {
@@ -75,6 +86,7 @@ public class AuctionHouse {
   
   /**
    * Displays the sold products in the format [<ProductId> - <BuyerName> bid £<bidValue>].
+   * 
    * @return string containing all sold products in the specific format
    */
   public String displaySoldProducts() {
@@ -92,6 +104,7 @@ public class AuctionHouse {
   
   /**
    * Displays the not sold products in the format [<ProductId> - <ProductName>].
+   * 
    * @return string containing all not sold products in the specific format
    */
   public String displayUnsoldProducts() {
@@ -108,9 +121,12 @@ public class AuctionHouse {
   
   /**
    * Ends the auction of a product and puts it either in map sold or not sold.
+   * 
    * @param product - the product whose auction is to be ended
+   * 
+   * @throws IllegalArgumentException -> If product is null or not for sale.
    */
-  public void endAuction(Product product) {
+  public void endAuction(Product product) throws IllegalArgumentException {
     if(product == null) {
       throw new IllegalArgumentException("Product must not be null!");
     }
@@ -139,16 +155,21 @@ public class AuctionHouse {
    * @param product -> the product which is bid
    * @param user -> the user making the bid
    * @param bidValue -> the value of the bid
+   * 
    * @return -> whether the bid was successful
+   * 
+   * @throws IllegalArgumentException -> If user or product are null.
    */
-  public boolean placeBid(Product product, User user, double bidValue) {
-    boolean wasSold = false;
+  public boolean placeBid(Product product, User user, double bidValue) throws IllegalArgumentException {
     if(product == null) {
       throw new IllegalArgumentException("Product must not be null!");
     }
     if(user == null) {
       throw new IllegalArgumentException("User must not be null!");
     }
+    
+    boolean wasSold = false;
+    
     // Product.placeBid checks whether the bidValue is positive.
     if(this.forSaleProducts.containsKey(product)) {
       wasSold = product.placeBid(user, bidValue);
@@ -160,13 +181,15 @@ public class AuctionHouse {
   
   /**
    * Registers a product for bidding (in map forSale)
+   * 
    * @param product -> the product to be registered
    * @param user -> the user selling the product
+   * 
    * @return -> whether the product was registered
+   * 
+   * @throws IllegalArgumentException -> If user or product are null.
    */
-  public boolean register(Product product, User user) {
-    boolean wasRegistered = false;
-    
+  public boolean register(Product product, User user) throws IllegalArgumentException {
     if(product == null) {
       throw new IllegalArgumentException("Product must not be null");
     }
@@ -174,6 +197,9 @@ public class AuctionHouse {
       throw new IllegalArgumentException("User must not be null");
     }
     
+    boolean wasRegistered = false;
+    
+    // If product has not already been registered.
     if(!this.forSaleProducts.containsKey(product)) {
       this.forSaleProducts.put(product, user);
       wasRegistered = true;
@@ -181,6 +207,5 @@ public class AuctionHouse {
     
     return wasRegistered;
   }
-  
   
 }

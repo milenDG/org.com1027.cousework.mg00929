@@ -10,7 +10,9 @@ public class Product {
   private double reservedPrice = 0d;
   private List<Bid> bids = null;
   
-  public Product(int productId, String productName, double reservedPrice) {
+  public Product(int productId, String productName, double reservedPrice) throws IllegalArgumentException {
+    super();
+    
     if(productId < 0) {
       throw new IllegalArgumentException("ProductId must be non-negative!");
     }
@@ -20,6 +22,8 @@ public class Product {
     
     this.productId = productId;
     this.productName = productName;
+    
+    // Reserved price is not necessary positive so there is no check!
     this.reservedPrice = reservedPrice;
     this.bids = new ArrayList<Bid>();
   }
@@ -56,7 +60,7 @@ public class Product {
     return this.reservedPrice;
   }
   
-  public boolean placeBid(User user, double bidValue) {
+  public boolean placeBid(User user, double bidValue) throws IllegalArgumentException {
     boolean wasBidAdded = false;
     
     if(user == null) {

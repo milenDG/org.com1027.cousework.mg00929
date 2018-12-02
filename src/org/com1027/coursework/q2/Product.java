@@ -5,7 +5,9 @@ public abstract class Product {
   private int productId = 0;
   private String productName = null;
   
-  public Product(int productId, String productName) {
+  public Product(int productId, String productName) throws IllegalArgumentException {
+    super();
+    
     if(productId < 0) {
       throw new IllegalArgumentException("ProductId must be non-negative!");
     }

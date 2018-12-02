@@ -9,7 +9,7 @@ public class BuyNowProduct extends Product{
   private List<Purchase> purchases = null;
   
   
-  public BuyNowProduct(int productId, String productName, double price, int quantity) {
+  public BuyNowProduct(int productId, String productName, double price, int quantity) throws IllegalArgumentException {
     super(productId, productName);
     
     if (price <= 0d) {
@@ -25,7 +25,7 @@ public class BuyNowProduct extends Product{
   }
 
   
-  public boolean attemptToPurchase(User user, int quantity) {
+  public boolean attemptToPurchase(User user, int quantity) throws IllegalArgumentException {
     if(user == null) {
       throw new IllegalArgumentException("User must not be null!");
     }

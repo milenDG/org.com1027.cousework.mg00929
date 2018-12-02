@@ -5,7 +5,9 @@ public class Purchase {
   private User buyer = null;
   private int quantityPurchased = 0;
   
-  public Purchase(User buyer, int quantityPurchased) {
+  public Purchase(User buyer, int quantityPurchased) throws IllegalArgumentException {
+    super();
+    
     if(buyer == null) {
       throw new IllegalArgumentException("Buyer must not be null!");
     }

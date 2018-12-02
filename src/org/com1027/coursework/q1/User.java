@@ -3,7 +3,9 @@ package org.com1027.coursework.q1;
 public class User {
   private String name = null;
   
-  public User(String name) {
+  public User(String name) throws IllegalArgumentException {
+    super();
+    
     if (name == null) {
       throw new IllegalArgumentException("Name must not be null!");
     } 

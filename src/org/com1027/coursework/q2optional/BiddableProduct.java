@@ -9,12 +9,14 @@ public class BiddableProduct extends Product{
   
   public BiddableProduct(int productId, String productName, double reservedPrice) {
     super(productId, productName);
+    
+    // Reserved price is not necessarily positive so there is no checking!
     this.reservedPrice = reservedPrice;
     this.bids = new ArrayList<Bid>();
   }
 
   
-  public boolean attemptToPurchase(User user, double bidValue) {
+  public boolean attemptToPurchase(User user, double bidValue) throws IllegalArgumentException {
     if(user == null) {
       throw new IllegalArgumentException("User must not be null!");
     }

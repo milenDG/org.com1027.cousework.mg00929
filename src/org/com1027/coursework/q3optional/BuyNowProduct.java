@@ -9,7 +9,7 @@ public class BuyNowProduct extends Product{
   private List<Purchase> purchases = null;
   
   
-  public BuyNowProduct(int productId, String productName, double price, int quantity) {
+  public BuyNowProduct(int productId, String productName, double price, int quantity) throws IllegalArgumentException {
     super(productId, productName);
     
     if (price <= 0d) {
@@ -26,13 +26,17 @@ public class BuyNowProduct extends Product{
   
   public BuyNowProduct(BuyNowProduct product) {
     super(product.getProductId(), product.getProductName());
+    
+    // There are no checks for the price and quantity,
+    // since if the object has already been defined,
+    // its fields have already been checked by its constructor.
     this.price = product.getCurrentPrice();
     this.quantity = product.getQuantity();
     this.purchases = product.purchases;
   }
 
   
-  public boolean attemptToPurchase(User user, int quantity) {
+  public boolean attemptToPurchase(User user, int quantity) throws IllegalArgumentException {
     if(user == null) {
       throw new IllegalArgumentException("User must not be null!");
     }

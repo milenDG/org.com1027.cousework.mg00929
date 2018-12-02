@@ -8,7 +8,9 @@ public class User {
   private Map<Integer, Integer> purchases = null;
   private Map<Integer, Double> successfulBids = null;
   
-  public User(String name) {
+  public User(String name) throws IllegalArgumentException {
+    super();
+    
     if (name == null) {
       throw new IllegalArgumentException("Name must not be null!");
     } 
@@ -22,7 +24,7 @@ public class User {
   }
 
   
-  public void buy(int productId, int quantity) {
+  public void buy(int productId, int quantity) throws IllegalArgumentException {
     if(productId < 0) {
       throw new IllegalArgumentException("ProductId must be greater than 0!");
     }
@@ -63,7 +65,7 @@ public class User {
         Character.toString(this.name.charAt(this.name.length() - 1));
   }
   
-  public void wonAuction(int productId, double winningPrice) {
+  public void wonAuction(int productId, double winningPrice) throws IllegalArgumentException {
     if(productId < 0) {
       throw new IllegalArgumentException("ProductId must be greater than 0!");
     }

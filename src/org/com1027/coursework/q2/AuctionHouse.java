@@ -10,13 +10,15 @@ public class AuctionHouse {
   private Map<Product, User> unsoldProducts = null;
   
   public AuctionHouse() {
+    super();
+    
     this.forSaleProducts = new HashMap<Product, User>();
     this.soldProducts = new HashMap<Product, User>();
     this.unsoldProducts = new HashMap<Product, User>();
   }
   
   
-  public boolean buyNow(BuyNowProduct product, User buyer, int quantity) {
+  public boolean buyNow(BuyNowProduct product, User buyer, int quantity) throws IllegalArgumentException {
     if(product == null) {
       throw new IllegalArgumentException("Product must not be null!");
     }
@@ -27,12 +29,12 @@ public class AuctionHouse {
     return product.attemptToPurchase(buyer, quantity);
   }
   
-  public boolean checkExistence(Product product) {
-    boolean productExists = false;
-    
+  public boolean checkExistence(Product product) throws IllegalArgumentException {
     if(product == null) {
       throw new IllegalArgumentException("Product must not be null!");
     }
+    
+    boolean productExists = false;
     
     for (Map.Entry<Product, User> entry: this.forSaleProducts.entrySet()) {
       if(entry.getKey() == product) {
@@ -86,7 +88,7 @@ public class AuctionHouse {
   }
   
   
-  public void endAuction(Product product) {
+  public void endAuction(Product product) throws IllegalArgumentException {
     if(product == null) {
       throw new IllegalArgumentException("Product must not be null!");
     }
@@ -108,14 +110,16 @@ public class AuctionHouse {
   }
   
   
-  public boolean placeBid(BiddableProduct product, User user, double bidValue) {
-    boolean wasSold = false;
+  public boolean placeBid(BiddableProduct product, User user, double bidValue) throws IllegalArgumentException {
     if(product == null) {
       throw new IllegalArgumentException("Product must not be null!");
     }
     if(user == null) {
       throw new IllegalArgumentException("User must not be null!");
     }
+    
+    boolean wasSold = false;
+    
     // Product.placeBid checks whether the bidValue is positive.
     if(this.forSaleProducts.containsKey(product)) {
       wasSold = product.attemptToPurchase(user, bidValue);
@@ -125,15 +129,15 @@ public class AuctionHouse {
   }
   
   
-  public boolean register(Product product, User user) {
-    boolean wasRegistered = false;
-    
+  public boolean register(Product product, User user) throws IllegalArgumentException {
     if(product == null) {
       throw new IllegalArgumentException("Product must not be null");
     }
     if(user == null) {
       throw new IllegalArgumentException("User must not be null");
     }
+    
+    boolean wasRegistered = false;
     
     if(!this.forSaleProducts.containsKey(product)) {
       this.forSaleProducts.put(product, user);
@@ -142,6 +146,5 @@ public class AuctionHouse {
     
     return wasRegistered;
   }
-  
   
 }
